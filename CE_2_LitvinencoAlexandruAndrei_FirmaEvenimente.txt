@@ -1,0 +1,51 @@
+==========================Cerințe===============================================
+Problemă: Trebuie să creezi o bază de date pentru o companie de organizare a evenimentelor. 
+Compania se ocupă cu planificarea și organizarea diverselor tipuri de evenimente, 
+de la nunți la conferințe corporative. 
+Baza de date trebuie să includă informații despre clienți, evenimente, furnizori și personalul companiei.
+
+Cerințe:
+
+La nivel conceptual:
+ a) identificați entitățile și relațiile care compun schema bazei de date. (0.25 puncte)
+ b) identificați atributele conținute de entități (relații) - nume și domeniu. (0.25 puncte)
+
+ La nivel logic
+ c) proiectați schema bazei de date folosind diagrama ER (atenție la cardinalitatea/modalitatea dintre entități)
+   și exportați rezultatele în format .mwb (MySQL Workbench) și .sql (fișier SQL). (0.25 puncte)
+ d) asigurați-vă că relațiile sunt în forma normală 3 (3NF). Argumentați. (0.25 puncte)
+
+
+==========================Specificații==========================================
+- Timp de lucru (Sambata 09/12/2023 ora 23:59 până Marti 19/12/2023 ora 23:59)
+- Convenție de denumire fișiere CE_2_Grupa_Nume_Prenume_numeSchemaBazaDate.extensie (.mwb/.sql)
+- Fișierele vor fi transmise pe adresa de e-mail marian.necula@faa.unibuc.ro până
+  la data și ora stabilite.
+- Transmiterea fișierelor după data și ora convenite conduce automat la scăderea punctajului,
+  astfel cu fiecare oră de întârziere se scad 0.1 puncte.
+- Punctaj maxim - 1 punct normalizat din 1.75 puncte aferente temelor de casă,
+  într-un total de 3.5 puncte la seminar.
+- Copiatul/plagiatul duce automat la anularea temei, respectiv a punctajului aferent.
+
+#################################################################################
+
+Rezolvare:
+La nivel conceptual schema logica va avea urmatoarele relatii
+Staff(CNP INT(13) PK, FirstName VARCHR(45), LastName VARCHR(45), Role VARCHR(45), Phone INT(10), Email VARCHR(45) )
+Suppliers(SupplierID INT PK, SupplierName VARCHR(45), ServiceType Enum(...), Phone INT(10), Email VARCHR(45) )
+Events(EventID INT PK, EventType Enum(...), EventDate DATE, Location VARCHR(45), ClientID INT FK)
+Clients(ClientID INT PK, FirstName VARCHR(45), LastName VARCHR(45), Phone INT(10), Email VARCHR(45) )
+
+La nivel conceptual schema logica va avea urmatoarele relatii
+EventSuppliers(EventID INT PK, EventID INT, SupplierID INT) 
+EventStaff(EventID INT, StaffID INT(13)
+Payments(PaymentID INT, EventID INT, Amount DOUBLE, PaymentDate DATETIME)
+EventExpenses(ExpenseID INT PK, EventID INT FK, Description VARCHR(45), Amount DOUBLE)
+Intre Staff si EventStaff avem o relatie de n to n deoarece mai multe persoane din personalul firmei pot participa la mai multe evenimente.
+Intre EventStaff si Events avem o relatie de n to n deoarece  ^^^
+Intre Clients si Events avem o relatie de 1 to n deoarece un client poate sa semneze mai multe contracte de evenimente.
+Intre Suppliers si EventSupplier avem o relatie de n to n deoarece mai multe firme aditionale pot fi chemate sa participe la un eveniment.
+Intre EventSUppliers si Events avem o relatie de n to n deoarece mai multe firme pot participa la mai multe evenimente
+Intre Payments si Events avem o relatie 1 to 1 deoarece fiecare eveniment constituie o plata.
+Intre EventExpenses si Events avem o relatie de 1 to 1 deoarece un eveniment poate sa genereze un singur raport de cheltuieli.
+
